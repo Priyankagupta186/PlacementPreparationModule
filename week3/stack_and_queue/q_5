@@ -1,0 +1,77 @@
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> st ; 
+        for (int i = 0 ;  i< s.length() ; i++)
+        {
+            char ch = s[i];
+
+            // if opening bracket then push into the stack 
+            if (ch == '(' || ch == '{' || ch == '[')
+            {
+                st.push(ch) ; 
+            }
+
+            else {
+                // if a closing bracket then we compare with the top of the stack 
+                // while comparing with top of stack we have 2 cases 
+                // the stack can be empty or the stack is not empty 
+                if (!st.empty())
+                {
+                    char top = st.top() ;
+                    if ((ch == ')' && top == '(') || 
+                        (ch == '}' && top == '{') ||
+                        (ch == ']' && top == '[')) 
+                        {
+                            // if matches then pop 
+                            st.pop() ;
+                        }
+                        else 
+                        {
+                            return false ; 
+                        }
+                }
+                else 
+                {
+                    // if stack is empty and we get a closing bracket means the string is unbalanced 
+                    return false ;
+                }
+            }
+        }
+
+        // in the end if the stack is empty -- meaning there is no opening bracket present in the stack -- meaning all opening brackets have found their corresponding closing bracket and have been popped then we return trie 
+        if (st.empty())
+        {
+            return true ; 
+        }
+        return false ;
+    }
+};
+/*Approach
+If we get any type of opening bracket we push it into the stack
+
+If we get a bracket of closing type we compare it with the top element of the stack
+
+opening bracket -> push
+closing bracket -> compare
+
+While comparing with the top of the stack there can be two cases
+
+The stack can be empty
+The stack can be non-empty
+1.If the stack is not empty
+Then we compare the top element of the stack
+
+If the top element and the current element of the string i.e. the closing bracket are of the same type -> pop the stack
+
+If not of the same type then -> return false
+
+2.If the stack is empty and we get a closing bracket -> means the string is not valid -> return false
+
+In the end after all the iterations
+
+If the stack is empty i.e., all the opening brackets found their corresponding closing brackets and have been popped
+Then we return true
+
+Else return false
+*/
