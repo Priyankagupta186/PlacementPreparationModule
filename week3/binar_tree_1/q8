@@ -1,0 +1,38 @@
+vector<int> topView(Node *root)
+    {
+        int maxi=0,mini=0;
+        unordered_map<int,int>mp;
+        vector<int>ans;
+        if(root->left==NULL && root->right==NULL){
+            ans.push_back(root->data);
+            return ans;
+        }
+        int x=0;
+        queue<pair<Node*,int>>q;
+        q.push({root,0});
+        while(!q.empty()){
+            Node *temp= q.front().first;
+            int l = q.front().second;
+            q.pop();
+            if(mp.count(l)==0){
+                mp[l]=temp->data;
+                maxi=max(l,maxi);
+                mini = min(mini,l);
+            }
+            if(temp->left){
+                q.push({temp->left,l-1});
+            }
+            if(temp->right){
+                q.push({temp->right,l+1});
+            }
+        }
+        for(int i=mini;i<=0;i++){
+            ans.push_back(mp[i]);
+        }
+        if(maxi>0){
+           for(int i=1;i<=maxi;i++){
+            ans.push_back(mp[i]);
+        } 
+        }
+        return ans;
+    }
