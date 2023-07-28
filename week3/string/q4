@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int myAtoi(string s) {
+        
+        bool pos=true;//whether the number is positive or negative
+        long mynum=0;
+        for(int i=0;i<s.size();i++)
+        {
+            if(isdigit(s[i]))
+            {
+                mynum=mynum*10+(s[i]-'0');
+                if(mynum>2147483647)//Handle the Overflow
+                    break;
+                if(i>0 && s[i-1]=='-')    
+                    pos=false;
+                if(i!=s.size()-1 &&!isdigit(s[i+1]))//break whenever we get a non-Digit Character
+                    break;
+            }  
+               
+            if(s[i]=='-' ||s[i]=='+')//special Case +-12 will yield 0 and not -12
+            {
+                if(!isdigit(s[i+1]))
+                    return 0;
+            }
+            
+            if(!isdigit(s[i]) && !isspace(s[i]) && s[i]!='-' && s[i]!='+') //for the cases like .1 or weirh 12 the ans is 0
+                return 0;
+        }
+        if(pos&& mynum>2147483647)
+             return 2147483647;
+        else if(mynum>2147483647)
+            return -2147483648;
+        return pos?mynum:-mynum;         
+    }
+        
+    
+
+};
