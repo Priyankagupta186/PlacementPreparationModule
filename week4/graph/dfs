@@ -1,0 +1,19 @@
+int visited[100001] ={};
+    vector<int> output;
+
+    void dfshelper(int node, vector<int> adj[], vector<int> &output) {
+        visited[node] = 1;
+        output.push_back(node);
+        for (auto it : adj[node]) {
+            if (!visited[it]) {
+                dfshelper(it, adj, output);
+            }
+        }
+    }
+    
+    vector<int> dfsOfGraph(int V, vector<int> adj[]) {
+        int start = 0;
+    
+        dfshelper(start, adj, output);
+        return output;
+    }
